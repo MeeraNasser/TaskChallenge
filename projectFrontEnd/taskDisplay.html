@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.1/angular.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLsGD2GVks9W9EWs-8DWgXaiEfsMBnClA&callback=initMap" async defer></script>
+    <script src="taskDisplayController.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });
+      }
+    </script>
+  </head>
+  <body ng-app="taskModule">
+    <div id="map"></div>
+    <section  ng-controller="taskController" ng-init="getAllTasks()">
+      <span>Task List</span>
+      <div align="right" style="margin-left: 37%;margin-top: 29px;width: 23%;">
+        <input type="text" ng-model="search" class="form-control" size="50" id="search"
+             placeholder="Type to instant search" style="font-size: 15px;">
+      </div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th ng-click="sortData('Courrier')">
+              <span class='glyphicon sort-icon' ng-show="sortKey == 'Courrier'"
+                    ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              Courrier
+            </th>
+            <th>
+              Driver Name
+            </th>
+            <th ng-click="sortData('Status')">
+              <span class='glyphicon sort-icon' ng-show="sortKey == 'Status'"
+                    ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              Status
+            </th>
+            <th>
+              Task Description
+            </th>
+            <th ng-click="sortData('StartDate')">
+              <span class='glyphicon sort-icon' ng-show="sortKey == 'StartDate'"
+                    ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+              StartDate
+            </th>
+            <th>
+              Task finished date
+            </th>
+            <th>
+              Delivery Date
+            </th>
+            <th>
+              Driver comment
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="task in tasksList | orderBy:sortKey:reverse|filter:search">
+            <td>{{task.courier}}</td>
+            <td>{{task.driverName}}</td>
+            <td>
+              <div ng-show="task.status == 'pending'" style="border-bottom: 1px solid yellow;background-color: #f9f9042e;height: 33px;padding-top: 4%;margin-bottom: 3%;    width: 49%;margin-left: 24%;">
+                {{task.status}}
+              </div>
+              <div ng-hide="task.status == 'pending'" style="color: green;border-bottom: 1px solid green;background-color: #ceefce;height: 34px;padding-top: 4%;width: 48%;margin-left: 24%;">
+                {{task.status}}
+              </div>
+              <div ng-show="task.status == 'pending'">
+                <a  data-toggle="modal" ng-click="getTaskID(task)" data-target="#taskModal" style="color: blue;font-weight: bolder;font-size: 17px;cursor: pointer;">Change Status</a>
+              </div>
+            </td>
+            <td>{{task.description}}</td>
+            <td>{{task.startedAt}}</td>
+            <td>{{task.finishedAt}}</td>
+            <td>{{task.deliveryDate}}</td>
+            <td>
+              -
+              <p ng-hide="task.status == 'pending'">{{task.driverComment}}</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                    <span> Update Task Status</span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="container">
+                      <table  class="table" style="box-shadow: 0 0 28px #ccc;border-radius: 20px;overflow: hidden;font-size: 14px;margin-bottom: 11%;margin-top: 5%;">
+                          <tr style="width: 100%; ">
+                              <td>
+                                <a ng-click="updateTaskStatus('Completed')">
+                                    Completed
+                                </a>
+                              </td>
+                              <td>
+                                 <a ng-click="updateTaskStatus('Failed')" >
+                                     Failed
+                                </a>
+                              </td>
+                          </tr>
+                      </table>
+                  </div>
+             </div>
+         </div>
+      </div>
+    </section>
+  </body>
+</html>

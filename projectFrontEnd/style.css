@@ -1,0 +1,73 @@
+#map {
+        height: 50%;
+        width: 50%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+section {
+      margin: 10px auto;
+}
+
+section table{
+      box-shadow: 0 0 28px grey;
+      width: 95% !important;
+      table-layout: fixed;
+      border-radius: 20px;
+      margin-left: 2%;
+      margin-top: 4%;
+      overflow: hidden;
+}
+
+section table thead tr{
+      cursor: pointer;
+      height: 12px;
+      color: #c84a16;
+      background-color: #ddd;
+}
+
+section table td{
+      border: 1px solid #ddd;
+      padding-left: 0.5%;
+      padding-right: 0.5%;
+      text-align: center;
+      color: #5b9bd1;
+}
+section table  tr th {
+     text-align: center;
+     border: 1px solid #ccc7c7;
+ }
+
+section span{
+    font-size: 30px;
+    color: #055082;
+    font-weight: bold;
+    margin-left: 13%;
+}
+
+.modal-content{
+    width: 45%;
+    height: 166px;
+}
+
+.modal-dialog{
+    margin-left: 33%;
+    margin-top: 7%;
+}
+
+.modal-content .container{
+      width: 75%;
+}
+
+.modal-content .container table a{
+      cursor: pointer;
+      color: #5b9bd1 !important;
+}
+
+section table  .glyphicon{
+      font-size: 14px;
+}
